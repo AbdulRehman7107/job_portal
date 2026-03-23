@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Header   from "./components/Header";
-import SearchBar from "./components/SearchBar";
-import JobList  from "./components/JobList";
+import Header     from "./components/Header";
+import SearchBar  from "./components/SearchBar";
+import JobList    from "./components/JobList";
+import ApplyModal from "./components/ApplyModal";
  
 // ── Helper: map a raw API post → a job object ──────────────────────────────
 const COMPANIES = [
@@ -26,6 +27,7 @@ function App() {
   const [savedJobs,  setSavedJobs]  = useState([]);       // saved job objects
   const [viewMode,   setViewMode]   = useState("All");    // "All" | "Saved"
   const [loading,    setLoading]    = useState(true);     // API loading flag
+  const [applyJob,   setApplyJob]   = useState(null);     // job to apply for (null = modal closed)
  
   // ── Fetch jobs on first render using useEffect ─────────────────────────
   useEffect(() => {
@@ -117,6 +119,7 @@ function App() {
           savedIds={savedIds}
           onSave={handleSave}
           onRemove={handleRemove}
+          onApply={(job) => setApplyJob(job)}
           loading={loading}
           viewMode={viewMode}
         />
@@ -126,6 +129,11 @@ function App() {
       <footer className="footer">
         Built with <span>♥</span> using React · Data from JSONPlaceholder API
       </footer>
+ 
+      {/* Apply modal — only renders when a job is selected */}
+      {applyJob && (
+        <ApplyModal job={applyJob} onClose={() => setApplyJob(null)} />
+      )}
  
     </div>
   );

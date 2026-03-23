@@ -1,6 +1,6 @@
 import JobCard from "./JobCard";
  
-function JobList({ jobs, savedIds, onSave, onRemove, loading, viewMode }) {
+function JobList({ jobs, savedIds, onSave, onRemove, onApply, loading, viewMode }) {
   if (loading) {
     return (
       <div className="loading">
@@ -37,6 +37,7 @@ function JobList({ jobs, savedIds, onSave, onRemove, loading, viewMode }) {
           isSaved={savedIds.includes(job.id)}
           onSave={onSave}
           onRemove={onRemove}
+          onApply={onApply}
         />
       ))}
     </div>
